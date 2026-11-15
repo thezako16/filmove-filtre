@@ -164,7 +164,31 @@ const P={
  "Mammoth 1900":{bw:[0,.25,.75],gain:1.25,c:1.3,sh:[.18,.1,.05],hi:[.97,.9,.75],v:.9,gr:.03},
  "The Great Picture":{bw:BW,c:.82,lift:.08,v:.7,gr:.015},
  "Platina-paládium":{bw:BW,c:.9,lift:.05,sh:[.12,.09,.07],hi:[.98,.95,.88],v:.2},
- "Barytová kópia":{bw:[.35,.55,.1],c:1.35,v:.3}
+ "Barytová kópia":{bw:[.35,.55,.1],c:1.35,v:.3},
+ "Paris":{sat:.92,c:.9,m:[1.06,.98,1.04],lift:.06,g:.95},
+ "Lagos":{sat:1.28,c:1.18,m:[.94,1.04,1.08]},
+ "Melbourne":{sat:1.08,c:1.08,m:[1.07,1.02,.94],lift:.03},
+ "Jakarta":{sat:.88,c:.92,m:[1.08,1.02,.88],lift:.07,g:.95},
+ "Abu Dhabi":{sat:1.15,c:1.12,m:[1.1,.98,.92],lift:.02,v:.2},
+ "Buenos Aires":{sat:.95,c:.95,m:[.96,1.06,.98],lift:.05,ssh:[0,.03,.01]},
+ "New York":{sat:.95,c:1.22,m:[.96,1,1.08],g:1.08,v:.45},
+ "Oslo":{sat:.82,c:.92,m:[1,1.01,1.03],lift:.06,g:.88},
+ "Cairo":{sat:1.1,c:1.08,m:[1.12,1.04,.82],lift:.03,shi:[.06,.03,-.04]},
+ "Rio de Janeiro":{sat:1.25,c:1.1,m:[1.1,1.02,.88],lift:.04,g:.92},
+ "Tokyo":{bw:[.3,.59,.11],c:1.15},
+ "Jaipur":{sat:1.22,c:1.08,m:[1.12,.96,1.06],lift:.04,shi:[.05,0,.03]},
+ "VSCO A6":{sat:.9,c:.88,m:[1.05,1.02,.95],lift:.05,g:.95},
+ "VSCO C1":{sat:.85,c:.9,m:[1.02,1,1.06],lift:.08,g:.88},
+ "VSCO M5":{sat:1.05,c:.95,m:[1.1,1.02,.88],lift:.06,gr:.025},
+ "VSCO HB2":{sat:.85,c:.95,m:[.96,1.02,1.08],lift:.04,ssh:[-.02,.01,.04]},
+ "Clean Girl":{sat:.88,c:.95,m:[1.04,1.02,.97],lift:.07,g:.9},
+ "Moody":{sat:.9,c:1.25,m:[1.04,1,.92],g:1.12,ssh:[.04,.02,-.02],v:.4},
+ "Faded Matte":{sat:.85,c:.8,m:[1.02,1,.98],lift:.12,g:.95},
+ "Golden Hour":{sat:1.12,c:1.05,m:[1.12,1.04,.85],lift:.04,g:.92,shi:[.08,.04,-.05]},
+ "Dark Academia":{sat:.7,c:1.15,m:[1.06,1,.88],g:1.1,ssh:[.05,.03,0],v:.5},
+ "Y2K Flash":{sat:.95,c:1.2,m:[.96,1.02,1.08],lift:.05,gr:.02,ssh:[-.02,.01,.04]},
+ "Disposable":{sat:.9,c:.92,m:[1.04,1.06,.88],lift:.08,gr:.035,v:.3},
+ "Cinematic":{sat:1.05,c:1.2,m:[1.02,1,.98],g:1.08,ssh:[-.05,.02,.08],shi:[.08,.03,-.06],v:.35,gr:.02},
 };
 const CATS=[
  ["Všetko",Object.keys(P)],
@@ -173,6 +197,7 @@ const CATS=[
  ["4×5 / 8×10",["Kodak Portra 160","Kodak Portra 400","Kodak Ektar 100","Kodak Ektachrome E100","Fuji Provia 100F","Fuji Velvia 50","Fuji Velvia 100","Ilford HP5 Plus","Ilford FP4 Plus","Ilford Delta 100","Kodak T-Max 100","Kodak T-Max 400","Kodak Tri-X 320","Fomapan 100","Ilford Ortho Plus"]],
  ["Ultra veľký formát",["Polaroid 20×24 Color","Polaroid 20×24 ČB","Mammoth 1900","The Great Picture","Platina-paládium","Barytová kópia"]],
  ["Instagram",["Clarendon","Valencia","Juno","Lark","Gingham","Teal & Orange"]],
+ ["Moderné IG/FB",["Paris","Lagos","Melbourne","Jakarta","Abu Dhabi","Buenos Aires","New York","Oslo","Cairo","Rio de Janeiro","Tokyo","Jaipur","VSCO A6","VSCO C1","VSCO M5","VSCO HB2","Clean Girl","Moody","Faded Matte","Golden Hour","Dark Academia","Y2K Flash","Disposable","Cinematic"]],
  ["Štýly",["Racing","Retro ČB"]]
 ];
 const $=id=>document.getElementById(id);
@@ -268,6 +293,7 @@ document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT"&&e.target.
  if(e.code==="Space"&&!hold){e.preventDefault();hold=true;renderMain(false)}});
 document.addEventListener("keyup",e=>{if(e.code==="Space"){hold=false;renderMain(false)}});
 $("dl").onclick=()=>{if(!filtered)return;const c=toCanvas(filtered);c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=(fname.replace(/\.[^.]+$/,"")||"foto")+"_"+cur.replace(/[^\w]+/g,"_")+".jpg";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)},"image/jpeg",.93)};
+(function(){const h=decodeURIComponent((location.hash||"").replace(/^#/,"")).toLowerCase().trim();if(!h)return;const n=s=>(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const fi=Object.keys(P).find(k=>n(k)===h);const ci=CATS.findIndex(c=>n(c[0])===h||n(c[0]).includes(h));if(ci>=0)cat=ci;if(fi){cur=fi;if(ci<0){const j=CATS.findIndex((c,i)=>i>0&&Array.isArray(c[1])&&c[1].includes(fi));if(j>=0)cat=j}}else if(ci>=0){const names=CATS[ci][1];if(Array.isArray(names)&&names.length)cur=names[0]}})();
 renderTabs();demo();
 </script>
 </body>
