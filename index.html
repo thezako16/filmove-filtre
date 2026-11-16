@@ -244,6 +244,80 @@ html.is-ios .modal{padding:12px;padding-bottom:max(12px, env(safe-area-inset-bot
 html.is-ios .mdialog{width:100%;border-radius:22px 22px 16px 16px}
 html.is-ios .foot{flex:0 0 auto;padding:8px 14px calc(10px + env(safe-area-inset-bottom, 0px));font-size:11.5px}
 /* === /ios-layout-force === */
+/* === mobile-scroll-fix === */
+@media (max-width:900px){
+
+html , html body{height:auto;min-height:100%;overflow-y:auto;overflow-x:hidden}
+html body{overflow:visible;overflow-x:clip;padding-bottom:env(safe-area-inset-bottom,0px)}
+html .app{display:flex;flex-direction:column;height:auto;min-height:100dvh;overflow:visible;max-width:100%}
+html main, html aside{display:contents}
+html header{order:0;position:relative;grid-column:auto;flex-wrap:wrap;gap:8px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top,0px));padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));border-bottom:0;background:transparent;backdrop-filter:none}
+html .logo{flex:1 0 100%;font-size:16px}
+html .logo small, html .spacer{display:none}
+html header .btn{flex:1 1 auto;justify-content:center;min-height:44px}
+html .stage{order:1;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;flex:0 0 auto;height:auto;max-height:50dvh;min-height:160px;margin:4px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px));touch-action:pan-y;box-shadow:0 12px 22px rgba(0,0,0,.55)}
+html .frame, html #view{touch-action:pan-y}
+html .frame{max-height:100%}
+html #view{max-width:100%;max-height:calc(50dvh - 2px);width:auto;height:auto}
+html .hint{max-width:92%;text-align:center}
+html .ahead{order:2;padding:12px 0 4px;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
+html .ahead h2{display:none}
+html .tabs{position:relative;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;overscroll-behavior-x:contain;scroll-snap-type:x proximity;gap:8px;padding:2px 2px 4px}
+html .tabs::-webkit-scrollbar{display:none}
+html .tab{flex:0 0 auto;min-height:44px;padding:10px 16px;font-size:14px;scroll-snap-align:start}
+html .search{font-size:16px;min-height:44px;padding:10px 14px;margin-top:8px}
+html .grid{order:3;position:relative;flex:0 0 auto;display:flex;flex-wrap:nowrap;grid-template-columns:none;gap:8px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 12px;padding:6px max(10px,env(safe-area-inset-right,0px)) 12px max(10px,env(safe-area-inset-left,0px));scrollbar-width:none}
+html .grid::-webkit-scrollbar{display:none}
+html .tile{flex:0 0 116px;width:116px;min-height:44px;padding:5px;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
+html .tile .nm{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:6px 2px 1px}
+html .tile .tg{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+html .tile.on{outline-width:3px;outline-offset:-1px}
+html .empty{flex:1 0 100%;padding:14px 4px}
+html .controls{order:4;padding:6px max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));gap:6px 14px}
+html .ctl{width:100%;font-size:14px}
+html input[type=range]{touch-action:pan-y}
+html .fmt{display:none}
+html .msg{width:100%}
+html .edpanel{order:5;margin:8px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px))}
+html .foot{order:6;margin-top:14px;border-top:1px solid var(--line);padding:12px 14px calc(96px + env(safe-area-inset-bottom,0px))}
+
+}
+
+html.is-ios , html.is-ios body{height:auto;min-height:100%;overflow-y:auto;overflow-x:hidden}
+html.is-ios body{overflow:visible;overflow-x:clip;padding-bottom:env(safe-area-inset-bottom,0px)}
+html.is-ios .app{display:flex;flex-direction:column;height:auto;min-height:100dvh;overflow:visible;max-width:100%}
+html.is-ios main, html.is-ios aside{display:contents}
+html.is-ios header{order:0;position:relative;grid-column:auto;flex-wrap:wrap;gap:8px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top,0px));padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));border-bottom:0;background:transparent;backdrop-filter:none}
+html.is-ios .logo{flex:1 0 100%;font-size:16px}
+html.is-ios .logo small, html.is-ios .spacer{display:none}
+html.is-ios header .btn{flex:1 1 auto;justify-content:center;min-height:44px}
+html.is-ios .stage{order:1;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;flex:0 0 auto;height:auto;max-height:50dvh;min-height:160px;margin:4px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px));touch-action:pan-y;box-shadow:0 12px 22px rgba(0,0,0,.55)}
+html.is-ios .frame, html.is-ios #view{touch-action:pan-y}
+html.is-ios .frame{max-height:100%}
+html.is-ios #view{max-width:100%;max-height:calc(50dvh - 2px);width:auto;height:auto}
+html.is-ios .hint{max-width:92%;text-align:center}
+html.is-ios .ahead{order:2;padding:12px 0 4px;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
+html.is-ios .ahead h2{display:none}
+html.is-ios .tabs{position:relative;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x pan-y;overscroll-behavior-x:contain;scroll-snap-type:x proximity;gap:8px;padding:2px 2px 4px}
+html.is-ios .tabs::-webkit-scrollbar{display:none}
+html.is-ios .tab{flex:0 0 auto;min-height:44px;padding:10px 16px;font-size:14px;scroll-snap-align:start}
+html.is-ios .search{font-size:16px;min-height:44px;padding:10px 14px;margin-top:8px}
+html.is-ios .grid{order:3;position:relative;flex:0 0 auto;display:flex;flex-wrap:nowrap;grid-template-columns:none;gap:8px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 12px;padding:6px max(10px,env(safe-area-inset-right,0px)) 12px max(10px,env(safe-area-inset-left,0px));scrollbar-width:none}
+html.is-ios .grid::-webkit-scrollbar{display:none}
+html.is-ios .tile{flex:0 0 116px;width:116px;min-height:44px;padding:5px;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
+html.is-ios .tile .nm{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:6px 2px 1px}
+html.is-ios .tile .tg{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+html.is-ios .tile.on{outline-width:3px;outline-offset:-1px}
+html.is-ios .empty{flex:1 0 100%;padding:14px 4px}
+html.is-ios .controls{order:4;padding:6px max(12px,env(safe-area-inset-right,0px)) 0 max(12px,env(safe-area-inset-left,0px));gap:6px 14px}
+html.is-ios .ctl{width:100%;font-size:14px}
+html.is-ios input[type=range]{touch-action:pan-y}
+html.is-ios .fmt{display:none}
+html.is-ios .msg{width:100%}
+html.is-ios .edpanel{order:5;margin:8px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px))}
+html.is-ios .foot{order:6;margin-top:14px;border-top:1px solid var(--line);padding:12px 14px calc(96px + env(safe-area-inset-bottom,0px))}
+
+/* === /mobile-scroll-fix === */
 </style>
 </head>
 <body>
@@ -515,15 +589,20 @@ function renderMain(recompute){if(!src)return;const v=$("view");if(v.width!==src
  $("badge").textContent=hold?"Originál":cur+(DISC.has(cur)?" · nevyrába sa":"")+(amt<1?` · ${Math.round(amt*100)} %`:"");
  $("split").style.display=cmp&&!hold?"block":"none";$("split").style.left=(split*100)+"%";$("badgeR").style.display=cmp&&!hold?"block":"none";$("badgeR").style.left="14px";$("badgeR").style.right="auto";$("badgeR").style.bottom="auto";$("badgeR").style.top="14px"}
 let timer=null;
-function renderGrid(){const q=$("q").value.trim().toLowerCase();list=CATS[cat][1].filter(n=>!q||n.toLowerCase().includes(q)||(DISC.has(n)&&"nevyrába sa".includes(q)));const g=$("grid");g.innerHTML="";
+function renderGrid(){const q=$("q").value.trim().toLowerCase();list=CATS[cat][1].filter(n=>!q||n.toLowerCase().includes(q)||(DISC.has(n)&&"nevyrába sa".includes(q)));const g=$("grid");g.innerHTML="";g.scrollLeft=0;
  if(!list.length){g.innerHTML='<div class="empty">Nič sa nenašlo.</div>';return}
  const jobs=[];list.forEach(n=>{const b=document.createElement("button");b.className="tile"+(n===cur?" on":"");const cv=document.createElement("canvas");
   const f=P[n];b.appendChild(cv);b.insertAdjacentHTML("beforeend",`<span class="nm">${n}</span><span class="tg">${f.bw?(f.sh?"tónovaný":"čiernobiely"):"farebný"}${DISC.has(n)?'<span class="off"> · nevyrába sa</span>':""}</span>`);
   b.onclick=()=>pick(n);g.appendChild(b);jobs.push([cv,f])});
- const onTile=g.querySelector(".tile.on");if(onTile)onTile.scrollIntoView({block:"nearest",inline:"nearest"});
+ const onTile=g.querySelector(".tile.on");ffReveal(onTile,false);
  clearTimeout(timer);let i=0;const step=()=>{const t0=performance.now();while(i<jobs.length&&performance.now()-t0<24){const[cv,f]=jobs[i++];cv.width=small.width;cv.height=small.height;cv.getContext("2d").putImageData(apply(small,f,1,snoise,.4),0,0)}if(i<jobs.length)timer=setTimeout(step,0)};step()}
-function pick(n){cur=n;document.querySelectorAll(".tile").forEach(t=>t.classList.toggle("on",t.querySelector(".nm").textContent===n));renderMain(true)}
-function renderTabs(){const t=$("tabs");t.innerHTML="";CATS.forEach((c,i)=>{const b=document.createElement("button");b.className="tab"+(i===cat?" on":"");b.textContent=c[0];b.onclick=()=>{cat=i;renderTabs();renderGrid()};t.appendChild(b)});const on=t.querySelector(".tab.on");if(on)on.scrollIntoView({inline:"center",block:"nearest"})}
+function pick(n){cur=n;document.querySelectorAll(".tile").forEach(t=>t.classList.toggle("on",t.querySelector(".nm").textContent===n));ffReveal(document.querySelector(".tile.on"),true);renderMain(true)}
+/* mobile-scroll-fix: scroll only the strip/list container, never the page */
+function ffReveal(el,smooth){if(!el)return;const p=el.parentElement;if(!p)return;const cs=getComputedStyle(p);const beh=smooth?"smooth":"auto";
+ if(p.scrollWidth>p.clientWidth+2&&cs.overflowX!=="visible"&&cs.overflowX!=="hidden"){const l=el.offsetLeft-(p.clientWidth-el.offsetWidth)/2;p.scrollTo({left:Math.max(0,l),behavior:beh});return}
+ if(p.scrollHeight>p.clientHeight+2&&cs.overflowY!=="visible"&&cs.overflowY!=="hidden"){const t=el.offsetTop,b=t+el.offsetHeight;if(t<p.scrollTop)p.scrollTo({top:t-6,behavior:beh});else if(b>p.scrollTop+p.clientHeight)p.scrollTo({top:b-p.clientHeight+6,behavior:beh})}}
+
+function renderTabs(){const t=$("tabs");t.innerHTML="";CATS.forEach((c,i)=>{const b=document.createElement("button");b.className="tab"+(i===cat?" on":"");b.textContent=c[0];b.onclick=()=>{cat=i;renderTabs();renderGrid()};t.appendChild(b)});const on=t.querySelector(".tab.on");ffReveal(on,false)}
 
 const RAW_RE=/\.(cr2|cr3|crw|nef|nrw|arw|srf|sr2|dng|raf|orf|rw2|pef|srw|x3f|3fr|iiq|erf|mef|mos|kdc|dcr|rwl|raw)$/i;
 function isRawName(n){return RAW_RE.test(n||"")}
@@ -560,7 +639,7 @@ $("cmp").onclick=()=>{cmp=!cmp;$("cmp").classList.toggle("on",cmp);renderMain(fa
 /* photo gestures: bindPhotoGestures() */
 $("q").oninput=renderGrid;
 document.addEventListener("keydown",e=>{if(($("exmodal")&&!$("exmodal").hidden)||(e.target.tagName==="INPUT"&&e.target.type!=="range"))return;
- if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();let i=list.indexOf(cur);i=(i+(e.key==="ArrowRight"?1:-1)+list.length)%list.length;pick(list[i]);const t=document.querySelector(".tile.on");if(t)t.scrollIntoView({block:"nearest",behavior:"smooth"})}
+ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();let i=list.indexOf(cur);i=(i+(e.key==="ArrowRight"?1:-1)+list.length)%list.length;pick(list[i]);ffReveal(document.querySelector(".tile.on"),true)}
  if(e.code==="Space"&&!hold){e.preventDefault();hold=true;renderMain(false)}});
 document.addEventListener("keyup",e=>{if(e.code==="Space"){hold=false;renderMain(false)}});
 
@@ -1680,7 +1759,7 @@ function bindPhotoGestures() {
       i = (i + dir + list.length) % list.length;
       pick(list[i]);
       const t = document.querySelector(".tile.on");
-      if (t) t.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+      ffReveal(t, true);
     }
   };
   fr.addEventListener("pointerup", finish);
