@@ -73,6 +73,45 @@ kbd{background:#2a2622;border:1px solid #3a342e;border-radius:5px;padding:0 5px;
 .loading .spin{width:28px;height:28px;border-radius:50%;border:3px solid #3a342e;border-top-color:var(--accent);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){.fmt{margin-left:0;width:100%;max-width:none}}
+
+.btn.ghost{background:transparent}
+.btn.ghost.on{border-color:var(--accent);color:var(--accent2);background:#26211a}
+.edpanel{display:none;margin-top:12px;padding:16px 18px 14px;border-radius:16px;background:linear-gradient(180deg,rgba(31,28,25,.96),rgba(23,21,19,.96));border:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.22)}
+.edpanel.on{display:block}
+.edgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;align-items:center}
+.edgrid .ctl{width:100%;gap:10px}
+.edgrid .ctl .lbl{min-width:108px;flex:0 0 auto;color:var(--muted)}
+.edgrid input[type=range]{flex:1;width:auto;min-width:0}
+.edhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.edhead h3{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);font-weight:600}
+.edreset{background:none;border:0;color:var(--dim);font:inherit;font-size:12px;cursor:pointer;padding:0}
+.edreset:hover{color:var(--text)}
+.modal{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(8,7,6,.66);backdrop-filter:blur(10px)}
+.modal[hidden]{display:none!important}
+.mdialog{width:min(460px,100%);background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px 26px 22px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.mdialog h2{font-size:18px;font-weight:650;margin-bottom:6px}
+.mdialog .sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.45}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.pill{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);font:inherit;font-size:13px;font-weight:550;cursor:pointer;transition:.15s}
+.pill:hover{color:var(--text);border-color:#4a433b}
+.pill.on{background:linear-gradient(180deg,var(--accent2),var(--accent));color:#1b1209;border-color:transparent}
+.pill.res{border-radius:14px;text-align:left;padding:10px 14px;flex:1 1 30%;min-width:118px}
+.pill.res small{display:block;font-weight:450;font-size:11px;opacity:.85;margin-top:3px}
+.qrow{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:13.5px;color:var(--muted)}
+.qrow input[type=range]{flex:1;width:auto}
+.sec-lab{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:var(--dim);font-weight:600;margin:0 0 8px}
+.note{font-size:12.5px;color:var(--dim);line-height:1.5;margin:4px 0 18px}
+.mactions{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.exprog{display:flex;align-items:center;gap:10px;color:var(--accent2);font-size:13.5px;font-weight:550;margin-right:auto}
+.exprog[hidden]{display:none!important}
+.exprog .spin{width:16px;height:16px;border-width:2px}
+@media(max-width:900px){
+  .edgrid{grid-template-columns:1fr}
+  .mdialog{padding:20px 18px 16px}
+}
+
+
+.foot{background:#171513}
 </style>
 </head>
 <body>
@@ -98,8 +137,19 @@ kbd{background:#2a2622;border:1px solid #3a342e;border-radius:5px;padding:0 5px;
     <label class="ctl">Sila filtra <input type="range" id="amt" min="0" max="100" value="100"> <b id="amtv">100 %</b></label>
     <div class="switch" id="cmp"><i></i>Porovnať s originálom</div>
     <span class="msg" id="msg"></span>
+    <button type="button" class="btn ghost on" id="edbtn" aria-expanded="true" aria-controls="edpanel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.7" fill="currentColor"/><circle cx="15" cy="12" r="1.7" fill="currentColor"/><circle cx="10" cy="17" r="1.7" fill="currentColor"/></svg>Úpravy</button>
     <span class="fmt">Podporuje JPG, PNG, WebP aj RAW (CR2, CR3, NEF, ARW, DNG, RAF…)</span>
   </div>
+  <div class="edpanel on" id="edpanel">
+    <div class="edhead"><h3>Odšumenie a doostrenie</h3><button type="button" class="edreset" id="edreset">Vynulovať</button></div>
+    <div class="edgrid">
+      <label class="ctl"><span class="lbl">Odšumenie</span> <input type="range" id="den" min="0" max="100" value="0"> <b id="denv">0 %</b></label>
+      <label class="ctl"><span class="lbl">Farebný šum</span> <input type="range" id="cdn" min="0" max="100" value="0"> <b id="cdnv">0 %</b></label>
+      <label class="ctl"><span class="lbl">Doostrenie</span> <input type="range" id="shp" min="0" max="100" value="0"> <b id="shpv">0 %</b></label>
+      <label class="ctl"><span class="lbl">Detaily</span> <input type="range" id="cla" min="0" max="100" value="0"> <b id="clav">0 %</b></label>
+    </div>
+  </div>
+
 </main>
 <aside>
   <div class="ahead">
@@ -108,10 +158,37 @@ kbd{background:#2a2622;border:1px solid #3a342e;border-radius:5px;padding:0 5px;
     <input class="search" id="q" placeholder="Hľadať film… (napr. Portra)">
   </div>
   <div class="grid" id="grid"></div>
-  <div class="foot">Šípky <kbd>←</kbd> <kbd>→</kbd> prepínajú filtre, <kbd>Medzerník</kbd> podržaním ukáže originál. Pri RAW sa zobrazí JPEG náhľad z fotoaparátu. Fotka sa spracúva len v tvojom počítači. Filtre sú digitálne napodobeniny, nie oficiálne profily.</div>
+  <div class="foot">Šípky <kbd>←</kbd> <kbd>→</kbd> prepínajú filtre, <kbd>Medzerník</kbd> podržaním ukáže originál. Pri RAW sa zobrazí JPEG náhľad z fotoaparátu. Odšumenie a doostrenie sa aplikujú pred filtrom. Fotka sa spracúva len v tvojom počítači. Filtre sú digitálne napodobeniny, nie oficiálne profily.</div>
 </aside>
 </div>
+<div class="modal" id="exmodal" hidden>
+  <div class="mdialog" role="dialog" aria-labelledby="extitle" aria-modal="true">
+    <h2 id="extitle">Stiahnuť fotku</h2>
+    <p class="sub">Filter a úpravy sa vyrenderujú v zvolenom rozlíšení. Fotka ostáva v tvojom prehliadači.</p>
+    <div class="sec-lab">Formát</div>
+    <div class="pills" id="exfmts">
+      <button type="button" class="pill on" data-fmt="jpeg">JPEG</button>
+      <button type="button" class="pill" data-fmt="png">PNG</button>
+      <button type="button" class="pill" data-fmt="webp">WebP</button>
+      <button type="button" class="pill" data-fmt="tiff">TIFF</button>
+    </div>
+    <div class="qrow" id="qrow"><span id="qlab">Kvalita JPEG</span> <input type="range" id="jq" min="50" max="100" value="95"> <b id="jqv">95</b></div>
+    <div class="sec-lab">Rozlíšenie</div>
+    <div class="pills" id="exres">
+      <button type="button" class="pill res on" data-res="full">Plné rozlíšenie<small id="rsfull">—</small></button>
+      <button type="button" class="pill res" data-res="4k">4K<small id="rs4k">—</small></button>
+      <button type="button" class="pill res" data-res="2k">2K<small id="rs2k">—</small></button>
+    </div>
+    <p class="note">RAW sa uložiť nedá — použi TIFF pre bezstratovú kvalitu.</p>
+    <div class="mactions">
+      <div class="exprog" id="exprog" hidden><div class="spin"></div><span id="exprogt">Spracúvam…</span></div>
+      <button type="button" class="btn" id="excancel">Zrušiť</button>
+      <button type="button" class="btn primary" id="exgo">Stiahnuť</button>
+    </div>
+  </div>
+</div>
 <script>
+
 const BW=[.3,.59,.11];
 const P={
  "Racing":{sat:1.4,c:1.3,m:[1.02,1,.98],v:.5,t:"farba"},
@@ -224,8 +301,10 @@ function apply(img,f,a,nz,gs){const W=img.width,H=img.height,s=img.data,out=new 
 function stepDown(source,sx,sy,sw,sh,w,h){let cur=source,x=sx,y=sy,cw=sw,ch=sh;while(cw/2>w&&ch/2>h){const nw=Math.round(cw/2),nh=Math.round(ch/2),t=document.createElement("canvas");t.width=nw;t.height=nh;const c=t.getContext("2d");c.imageSmoothingQuality="high";c.drawImage(cur,x,y,cw,ch,0,0,nw,nh);cur=t;x=0;y=0;cw=nw;ch=nh}
  const o=document.createElement("canvas");o.width=w;o.height=h;const c=o.getContext("2d");c.imageSmoothingQuality="high";c.drawImage(cur,x,y,cw,ch,0,0,w,h);return o}
 function toCanvas(d){const c=document.createElement("canvas");c.width=d.width;c.height=d.height;c.getContext("2d").putImageData(d,0,0);return c}
-function setSource(bmp,w,h){const MAX=2000,sc=Math.min(1,MAX/Math.max(w,h)),W=Math.round(w*sc),H=Math.round(h*sc);
- src=stepDown(bmp,0,0,w,h,W,H).getContext("2d").getImageData(0,0,W,H);noise=mkNoise(W*H);
+function setSource(bmp,w,h){prepped=null;fullW=w;fullH=h;if($("hint"))$("hint").style.opacity=0;
+ try{const fc=document.createElement("canvas");fc.width=w;fc.height=h;fc.getContext("2d").drawImage(bmp,0,0,w,h);fullSrc=fc;}catch(e){fullSrc=null}
+ const base=fullSrc||bmp,MAX=2000,sc=Math.min(1,MAX/Math.max(w,h)),W=Math.round(w*sc),H=Math.round(h*sc);
+ src=stepDown(base,0,0,w,h,W,H).getContext("2d").getImageData(0,0,W,H);noise=mkNoise(W*H); try{if(bmp&&bmp.close)bmp.close()}catch(e){} if(typeof updateExportSizes==="function")updateExportSizes();
  const ar=4/3;let sw=W,sh=H;if(sw/sh>ar)sw=Math.round(sh*ar);else sh=Math.round(sw/ar);
  const tw=Math.min(400,sw),th=Math.round(tw*3/4);small=stepDown(toCanvas(src),Math.round((W-sw)/2),Math.round((H-sh)/2),sw,sh,tw,th).getContext("2d").getImageData(0,0,tw,th);snoise=mkNoise(tw*th);
  renderMain(true);renderGrid()}
@@ -238,7 +317,7 @@ function demo(){const W=1500,H=1000,c=document.createElement("canvas");c.width=W
  for(let i=0;i<12;i++){const v=Math.round(i/11*255);x.fillStyle=`rgb(${v},${v},${v})`;x.fillRect(i*W/12,900,W/12+1,100)}
  fname="";$("upl").textContent="Nahrať fotku";setSource(c,W,H)}
 function renderMain(recompute){if(!src)return;const v=$("view");if(v.width!==src.width||v.height!==src.height){v.width=src.width;v.height=src.height}
- if(recompute)filtered=apply(src,P[cur],amt,noise,1);const ctx=v.getContext("2d");
+ if(recompute)filtered=apply(getPrepped(),P[cur],amt,noise,1);const ctx=v.getContext("2d");
  if(hold){ctx.putImageData(src,0,0)}else{ctx.putImageData(filtered,0,0);if(cmp){const sx=Math.round(split*src.width);if(sx>0)ctx.putImageData(src,0,0,0,0,sx,src.height)}}
  $("badge").textContent=hold?"Originál":cur+(amt<1?` · ${Math.round(amt*100)} %`:"");
  $("split").style.display=cmp&&!hold?"block":"none";$("split").style.left=(split*100)+"%";$("badgeR").style.display=cmp&&!hold?"block":"none";$("badgeR").style.left="14px";$("badgeR").style.right="auto";$("badgeR").style.bottom="auto";$("badgeR").style.top="14px"}
@@ -288,13 +367,841 @@ const fr=$("frame");let drag=false;const setS=e=>{const r=fr.getBoundingClientRe
 fr.addEventListener("pointerdown",e=>{if(!cmp)return;drag=true;fr.setPointerCapture(e.pointerId);setS(e)});fr.addEventListener("pointermove",e=>{if(drag)setS(e)});fr.addEventListener("pointerup",()=>drag=false);
 fr.style.cursor="default";$("cmp").addEventListener("click",()=>fr.style.cursor=cmp?"ew-resize":"default");
 $("q").oninput=renderGrid;
-document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT"&&e.target.type!=="range")return;
+document.addEventListener("keydown",e=>{if(($("exmodal")&&!$("exmodal").hidden)||(e.target.tagName==="INPUT"&&e.target.type!=="range"))return;
  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();let i=list.indexOf(cur);i=(i+(e.key==="ArrowRight"?1:-1)+list.length)%list.length;pick(list[i]);const t=document.querySelector(".tile.on");if(t)t.scrollIntoView({block:"nearest",behavior:"smooth"})}
  if(e.code==="Space"&&!hold){e.preventDefault();hold=true;renderMain(false)}});
 document.addEventListener("keyup",e=>{if(e.code==="Space"){hold=false;renderMain(false)}});
-$("dl").onclick=()=>{if(!filtered)return;const c=toCanvas(filtered);c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=(fname.replace(/\.[^.]+$/,"")||"foto")+"_"+cur.replace(/[^\w]+/g,"_")+".jpg";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)},"image/jpeg",.93)};
+
+function createEngine() {
+  const BW = [0.3, 0.59, 0.11];
+  const cl1 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+  const cl255 = (x) => (x < 0 ? 0 : x > 255 ? 255 : x);
+
+  function mkNoise(n) {
+    const o = new Float32Array(n);
+    let s = 12345;
+    const r = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+    for (let i = 0; i < n; i++) o[i] = (r() + r() + r() - 1.5) * 1.4;
+    return o;
+  }
+
+  function blurLum(d, W, H, rad) {
+    const L = new Float32Array(W * H);
+    for (let i = 0; i < W * H; i++) {
+      const l = (0.3 * d[i * 4] + 0.59 * d[i * 4 + 1] + 0.11 * d[i * 4 + 2]) / 255;
+      L[i] = l > 0.78 ? (l - 0.78) * 4.5 : 0;
+    }
+    const t = new Float32Array(W * H);
+    for (let p = 0; p < 2; p++) {
+      for (let y = 0; y < H; y++) {
+        let a = 0;
+        for (let x = -rad; x < W; x++) {
+          if (x + rad < W) a += L[y * W + x + rad];
+          if (x - rad - 1 >= 0) a -= L[y * W + x - rad - 1];
+          if (x >= 0) t[y * W + x] = a / (2 * rad + 1);
+        }
+      }
+      for (let x = 0; x < W; x++) {
+        let a = 0;
+        for (let y = -rad; y < H; y++) {
+          if (y + rad < H) a += t[(y + rad) * W + x];
+          if (y - rad - 1 >= 0) a -= t[(y - rad - 1) * W + x];
+          if (y >= 0) L[y * W + x] = a / (2 * rad + 1);
+        }
+      }
+    }
+    return L;
+  }
+
+  function apply(img, f, a, nz, gs) {
+    const W = img.width,
+      H = img.height,
+      s = img.data,
+      out = new ImageData(W, H),
+      d = out.data;
+    if (!f || a <= 0) {
+      d.set(s);
+      return out;
+    }
+    const sat = f.sat ?? 1,
+      c = f.c ?? 1,
+      m = f.m ?? [1, 1, 1],
+      lift = f.lift ?? 0,
+      g = f.g ?? 1,
+      gain = f.gain ?? 1,
+      v = f.v ?? 0,
+      gr = (f.gr ?? 0) * gs,
+      cx = W / 2,
+      cy = H / 2;
+    const hal = f.hal
+      ? blurLum(s, W, H, Math.max(2, Math.round(Math.max(W, H) / 90)))
+      : null;
+    for (let y = 0; y < H; y++) {
+      const dy = (y - cy) / cy;
+      for (let x = 0; x < W; x++) {
+        const p = y * W + x,
+          i = p * 4,
+          r0 = s[i] / 255,
+          g0 = s[i + 1] / 255,
+          b0 = s[i + 2] / 255;
+        let r, G, b;
+        if (f.bw) {
+          let l = r0 * f.bw[0] + g0 * f.bw[1] + b0 * f.bw[2];
+          l = cl1(l * gain);
+          l = cl1(0.5 + (l - 0.5) * c);
+          l = lift + l * (1 - lift);
+          if (g !== 1) l = Math.pow(l, g);
+          if (f.sh) {
+            r = f.sh[0] * (1 - l) + f.hi[0] * l;
+            G = f.sh[1] * (1 - l) + f.hi[1] * l;
+            b = f.sh[2] * (1 - l) + f.hi[2] * l;
+          } else {
+            r = G = b = l;
+          }
+        } else {
+          r = r0 * m[0] * gain;
+          G = g0 * m[1] * gain;
+          b = b0 * m[2] * gain;
+          const l = 0.3 * r + 0.59 * G + 0.11 * b;
+          r = l + (r - l) * sat;
+          G = l + (G - l) * sat;
+          b = l + (b - l) * sat;
+          r = 0.5 + (r - 0.5) * c;
+          G = 0.5 + (G - 0.5) * c;
+          b = 0.5 + (b - 0.5) * c;
+          r = lift + cl1(r) * (1 - lift);
+          G = lift + cl1(G) * (1 - lift);
+          b = lift + cl1(b) * (1 - lift);
+          if (f.ssh || f.shi) {
+            const L = cl1(l);
+            if (f.ssh) {
+              r += f.ssh[0] * (1 - L);
+              G += f.ssh[1] * (1 - L);
+              b += f.ssh[2] * (1 - L);
+            }
+            if (f.shi) {
+              r += f.shi[0] * L;
+              G += f.shi[1] * L;
+              b += f.shi[2] * L;
+            }
+          }
+          if (g !== 1) {
+            r = Math.pow(cl1(r), g);
+            G = Math.pow(cl1(G), g);
+            b = Math.pow(cl1(b), g);
+          }
+          if (hal) {
+            const h = Math.min(1, hal[p]) * f.hal;
+            r += h;
+            G += h * 0.25;
+            b += h * 0.08;
+          }
+        }
+        if (v > 0) {
+          const dx = (x - cx) / cx,
+            rr = Math.sqrt(dx * dx + dy * dy) - 0.3;
+          if (rr > 0) {
+            const k = 1 - v * rr * rr;
+            r *= k;
+            G *= k;
+            b *= k;
+          }
+        }
+        if (gr > 0) {
+          const n = nz[p % nz.length] * gr;
+          r += n;
+          G += n;
+          b += n;
+        }
+        d[i] = 255 * (r0 + (cl1(r) - r0) * a);
+        d[i + 1] = 255 * (g0 + (cl1(G) - g0) * a);
+        d[i + 2] = 255 * (b0 + (cl1(b) - b0) * a);
+        d[i + 3] = 255;
+      }
+    }
+    return out;
+  }
+
+  let _pref = new Float32Array(16);
+
+  function boxBlurF32(src, W, H, radius, out, tmp) {
+    const n = W * H;
+    if (radius < 1) {
+      if (!out) return src;
+      if (out !== src) out.set(src);
+      return out;
+    }
+    out = out || new Float32Array(n);
+    tmp = tmp || new Float32Array(n);
+    if (_pref.length < Math.max(W, H) + 1) _pref = new Float32Array(Math.max(W, H) + 1);
+    const p = _pref;
+    for (let y = 0; y < H; y++) {
+      const row = y * W;
+      p[0] = 0;
+      for (let x = 0; x < W; x++) p[x + 1] = p[x] + src[row + x];
+      for (let x = 0; x < W; x++) {
+        const a = x - radius < 0 ? 0 : x - radius;
+        const b = x + radius >= W ? W - 1 : x + radius;
+        tmp[row + x] = (p[b + 1] - p[a]) / (b - a + 1);
+      }
+    }
+    for (let x = 0; x < W; x++) {
+      p[0] = 0;
+      for (let y = 0; y < H; y++) p[y + 1] = p[y] + tmp[y * W + x];
+      for (let y = 0; y < H; y++) {
+        const a = y - radius < 0 ? 0 : y - radius;
+        const b = y + radius >= H ? H - 1 : y + radius;
+        out[y * W + x] = (p[b + 1] - p[a]) / (b - a + 1);
+      }
+    }
+    return out;
+  }
+
+  function boxBlurF32N(src, W, H, radius, passes) {
+    if (radius < 1 || passes < 1) {
+      const c = new Float32Array(W * H);
+      c.set(src);
+      return c;
+    }
+    const A = new Float32Array(W * H);
+    const B = new Float32Array(W * H);
+    const tmp = new Float32Array(W * H);
+    boxBlurF32(src, W, H, radius, A, tmp);
+    let cur = A,
+      next = B;
+    for (let i = 1; i < passes; i++) {
+      boxBlurF32(cur, W, H, radius, next, tmp);
+      const t = cur;
+      cur = next;
+      next = t;
+    }
+    return cur;
+  }
+
+  function guidedFilter(I, W, H, radius, eps) {
+    const n = W * H;
+    const tmp = new Float32Array(n);
+    const meanI = boxBlurF32(I, W, H, radius);
+    const II = new Float32Array(n);
+    for (let i = 0; i < n; i++) II[i] = I[i] * I[i];
+    const meanII = boxBlurF32(II, W, H, radius, II, tmp);
+    const a = meanII;
+    const b = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      let v = meanII[i] - meanI[i] * meanI[i];
+      if (v < 0) v = 0;
+      const aa = v / (v + eps);
+      a[i] = aa;
+      b[i] = meanI[i] - aa * meanI[i];
+    }
+    const meanA = boxBlurF32(a, W, H, radius, a, tmp);
+    const meanB = boxBlurF32(b, W, H, radius, b, tmp);
+    const q = meanI;
+    for (let i = 0; i < n; i++) q[i] = meanA[i] * I[i] + meanB[i];
+    return q;
+  }
+
+  function downsampleF32(src, W, H, w2, h2) {
+    const out = new Float32Array(w2 * h2);
+    for (let y = 0; y < h2; y++) {
+      const y0 = Math.floor((y * H) / h2);
+      const y1 = Math.min(H, Math.floor(((y + 1) * H) / h2) || y0 + 1);
+      for (let x = 0; x < w2; x++) {
+        const x0 = Math.floor((x * W) / w2);
+        const x1 = Math.min(W, Math.floor(((x + 1) * W) / w2) || x0 + 1);
+        let s = 0,
+          c = 0;
+        for (let yy = y0; yy < y1; yy++)
+          for (let xx = x0; xx < x1; xx++) {
+            s += src[yy * W + xx];
+            c++;
+          }
+        out[y * w2 + x] = s / (c || 1);
+      }
+    }
+    return out;
+  }
+
+  function upsampleF32(src, w2, h2, W, H) {
+    const out = new Float32Array(W * H);
+    for (let y = 0; y < H; y++) {
+      const fy = ((y + 0.5) * h2) / H - 0.5;
+      let y0 = Math.floor(fy);
+      const ty = fy - y0;
+      if (y0 < 0) y0 = 0;
+      const y1 = y0 + 1 < h2 ? y0 + 1 : h2 - 1;
+      for (let x = 0; x < W; x++) {
+        const fx = ((x + 0.5) * w2) / W - 0.5;
+        let x0 = Math.floor(fx);
+        const tx = fx - x0;
+        if (x0 < 0) x0 = 0;
+        const x1 = x0 + 1 < w2 ? x0 + 1 : w2 - 1;
+        const a = src[y0 * w2 + x0],
+          b = src[y0 * w2 + x1],
+          c = src[y1 * w2 + x0],
+          d = src[y1 * w2 + x1];
+        out[y * W + x] = a * (1 - tx) * (1 - ty) + b * tx * (1 - ty) + c * (1 - tx) * ty + d * tx * ty;
+      }
+    }
+    return out;
+  }
+
+  function blurChroma(arr, W, H, radius) {
+    if (radius < 1) return arr;
+    if (W * H > 700000 && (W > 2 && H > 2)) {
+      const w2 = Math.max(2, W >> 1),
+        h2 = Math.max(2, H >> 1);
+      const small = downsampleF32(arr, W, H, w2, h2);
+      const r2 = Math.max(1, Math.round(radius / 2));
+      const blurred = boxBlurF32N(small, w2, h2, r2, 2);
+      return upsampleF32(blurred, w2, h2, W, H);
+    }
+    return boxBlurF32N(arr, W, H, radius, 2);
+  }
+
+  function denoiseImage(img, lumaAmt, chromaAmt) {
+    lumaAmt = Math.max(0, Math.min(100, lumaAmt || 0));
+    chromaAmt = Math.max(0, Math.min(100, chromaAmt || 0));
+    if (lumaAmt <= 0 && chromaAmt <= 0) {
+      const out = new ImageData(img.width, img.height);
+      out.data.set(img.data);
+      return out;
+    }
+    const W = img.width,
+      H = img.height,
+      s = img.data,
+      N = W * H;
+    const Y = new Float32Array(N),
+      Cb = new Float32Array(N),
+      Cr = new Float32Array(N);
+    for (let i = 0; i < N; i++) {
+      const r = s[i * 4] / 255,
+        g = s[i * 4 + 1] / 255,
+        b = s[i * 4 + 2] / 255;
+      const y = 0.299 * r + 0.587 * g + 0.114 * b;
+      Y[i] = y;
+      Cb[i] = b - y;
+      Cr[i] = r - y;
+    }
+    let Yd = Y;
+    if (lumaAmt > 0) {
+      const t = lumaAmt / 100;
+      const radius = Math.max(1, Math.round(1 + t * Math.max(2, Math.min(W, H) / 260)));
+      const eps = 0.0006 + t * t * 0.09;
+      Yd = guidedFilter(Y, W, H, radius, eps);
+    }
+    const cAmt = Math.min(100, lumaAmt * 1.2 + chromaAmt);
+    let Cbd = Cb,
+      Crd = Cr;
+    if (cAmt > 0) {
+      const t = cAmt / 100;
+      const rCh = Math.max(2, Math.round(2 + t * Math.max(3, Math.min(W, H) / 140)));
+      Cbd = blurChroma(Cb, W, H, rCh);
+      Crd = blurChroma(Cr, W, H, rCh);
+    }
+    const out = new ImageData(W, H),
+      d = out.data;
+    for (let i = 0; i < N; i++) {
+      const y = Yd[i],
+        cb = Cbd[i],
+        cr = Crd[i];
+      d[i * 4] = cl255((y + cr) * 255);
+      d[i * 4 + 1] = cl255((y - 0.1942 * cb - 0.5094 * cr) * 255);
+      d[i * 4 + 2] = cl255((y + cb) * 255);
+      d[i * 4 + 3] = 255;
+    }
+    return out;
+  }
+
+  function sharpenImage(img, shpAmt, claAmt) {
+    shpAmt = Math.max(0, Math.min(100, shpAmt || 0));
+    claAmt = Math.max(0, Math.min(100, claAmt || 0));
+    if (shpAmt <= 0 && claAmt <= 0) {
+      const out = new ImageData(img.width, img.height);
+      out.data.set(img.data);
+      return out;
+    }
+    const W = img.width,
+      H = img.height,
+      s = img.data,
+      N = W * H;
+    const Y = new Float32Array(N);
+    for (let i = 0; i < N; i++)
+      Y[i] = (0.299 * s[i * 4] + 0.587 * s[i * 4 + 1] + 0.114 * s[i * 4 + 2]) / 255;
+    let Ys = Y;
+    if (shpAmt > 0) {
+      const t = shpAmt / 100;
+      const radius = Math.max(1, Math.round(Math.max(W, H) / 900));
+      const blur = boxBlurF32N(Y, W, H, radius, 3);
+      const amount = t * 1.65;
+      const threshold = 4 / 255;
+      Ys = new Float32Array(N);
+      for (let i = 0; i < N; i++) {
+        const diff = Y[i] - blur[i];
+        Ys[i] = Math.abs(diff) < threshold ? Y[i] : Y[i] + amount * diff;
+      }
+    }
+    if (claAmt > 0) {
+      const t = claAmt / 100;
+      const radius = Math.max(3, Math.round(Math.max(W, H) / 70));
+      const blur = boxBlurF32N(Ys, W, H, radius, 2);
+      const amount = t * 0.55;
+      const next = new Float32Array(N);
+      for (let i = 0; i < N; i++) {
+        const y = Ys[i];
+        const mid = 1 - (2 * y - 1) * (2 * y - 1);
+        next[i] = y + amount * mid * (y - blur[i]);
+      }
+      Ys = next;
+    }
+    const out = new ImageData(W, H),
+      d = out.data;
+    for (let i = 0; i < N; i++) {
+      const y0 = Y[i],
+        y1 = Ys[i];
+      const r = s[i * 4],
+        g = s[i * 4 + 1],
+        b = s[i * 4 + 2];
+      if (y0 > 1e-5) {
+        const k = y1 / y0;
+        d[i * 4] = cl255(r * k);
+        d[i * 4 + 1] = cl255(g * k);
+        d[i * 4 + 2] = cl255(b * k);
+      } else {
+        const v = cl255(y1 * 255);
+        d[i * 4] = v;
+        d[i * 4 + 1] = v;
+        d[i * 4 + 2] = v;
+      }
+      d[i * 4 + 3] = 255;
+    }
+    return out;
+  }
+
+  function prep(img, opts) {
+    const den = opts.denoise || 0,
+      cdn = opts.chroma || 0,
+      shp = opts.sharpen || 0,
+      cla = opts.clarity || 0;
+    let cur = img;
+    if (den > 0 || cdn > 0) cur = denoiseImage(cur, den, cdn);
+    if (shp > 0 || cla > 0) cur = sharpenImage(cur, shp, cla);
+    return cur;
+  }
+
+  function process(img, opts, onProg) {
+    const den = opts.denoise || 0,
+      cdn = opts.chroma || 0,
+      shp = opts.sharpen || 0,
+      cla = opts.clarity || 0;
+    let cur = img;
+    if (den > 0 || cdn > 0) {
+      if (onProg) onProg(0.1, "Odšumenie");
+      cur = denoiseImage(cur, den, cdn);
+    }
+    if (shp > 0 || cla > 0) {
+      if (onProg) onProg(0.45, "Doostrenie");
+      cur = sharpenImage(cur, shp, cla);
+    }
+    if (onProg) onProg(0.62, "Filter");
+    const nz = mkNoise(cur.width * cur.height);
+    cur = apply(cur, opts.filter || null, opts.amt == null ? 1 : opts.amt, nz, 1);
+    if (onProg) onProg(1, "Hotovo");
+    return cur;
+  }
+
+  function encodeTiff(imageData) {
+    const w = imageData.width | 0,
+      h = imageData.height | 0,
+      src = imageData.data;
+    if (w < 1 || h < 1) throw new Error("tiff size");
+    const n = w * h,
+      rgbLen = n * 3,
+      numTags = 13,
+      header = 8,
+      ifdSize = 2 + numTags * 12 + 4,
+      ifd = header,
+      bitsOff = ifd + ifdSize,
+      xresOff = bitsOff + 8,
+      yresOff = xresOff + 8,
+      stripOff = yresOff + 8,
+      total = stripOff + rgbLen;
+    const buf = new ArrayBuffer(total);
+    const u8 = new Uint8Array(buf);
+    const dv = new DataView(buf);
+    u8[0] = 0x49;
+    u8[1] = 0x49;
+    dv.setUint16(2, 42, true);
+    dv.setUint32(4, ifd, true);
+    dv.setUint16(ifd, numTags, true);
+    let p = ifd + 2;
+    const typS = 3,
+      typL = 4,
+      typR = 5;
+    function tag(id, typ, count, val) {
+      dv.setUint16(p, id, true);
+      dv.setUint16(p + 2, typ, true);
+      dv.setUint32(p + 4, count, true);
+      dv.setUint32(p + 8, val, true);
+      p += 12;
+    }
+    const useLong = w > 65535 || h > 65535;
+    tag(256, useLong ? typL : typS, 1, w);
+    tag(257, useLong ? typL : typS, 1, h);
+    tag(258, typS, 3, bitsOff);
+    tag(259, typS, 1, 1);
+    tag(262, typS, 1, 2);
+    tag(273, typL, 1, stripOff);
+    tag(277, typS, 1, 3);
+    tag(278, typL, 1, h);
+    tag(279, typL, 1, rgbLen);
+    tag(282, typR, 1, xresOff);
+    tag(283, typR, 1, yresOff);
+    tag(284, typS, 1, 1);
+    tag(296, typS, 1, 2);
+    dv.setUint32(p, 0, true);
+    dv.setUint16(bitsOff, 8, true);
+    dv.setUint16(bitsOff + 2, 8, true);
+    dv.setUint16(bitsOff + 4, 8, true);
+    dv.setUint32(xresOff, 72, true);
+    dv.setUint32(xresOff + 4, 1, true);
+    dv.setUint32(yresOff, 72, true);
+    dv.setUint32(yresOff + 4, 1, true);
+    let j = stripOff;
+    for (let i = 0; i < n; i++) {
+      const o = i * 4;
+      u8[j++] = src[o];
+      u8[j++] = src[o + 1];
+      u8[j++] = src[o + 2];
+    }
+    return new Blob([buf], { type: "image/tiff" });
+  }
+
+  function targetSize(fullW, fullH, mode) {
+    let maxW = fullW,
+      maxH = fullH;
+    if (mode === "4k") {
+      maxW = 3840;
+      maxH = 2160;
+    } else if (mode === "2k") {
+      maxW = 2048;
+      maxH = 1080;
+    }
+    const sc = Math.min(1, maxW / fullW, maxH / fullH);
+    return [Math.max(1, Math.round(fullW * sc)), Math.max(1, Math.round(fullH * sc))];
+  }
+
+  return {
+    mkNoise,
+    blurLum,
+    apply,
+    boxBlurF32,
+    boxBlurF32N,
+    guidedFilter,
+    denoiseImage,
+    sharpenImage,
+    prep,
+    process,
+    encodeTiff,
+    targetSize,
+  };
+}
+
+if (typeof self !== "undefined") self.createEngine = createEngine;
+
+const E = createEngine();
+let fullSrc = null, fullW = 0, fullH = 0, prepped = null;
+let denAmt = 0, cdnAmt = 0, shpAmt = 0, claAmt = 0;
+let exFmt = "jpeg", exQual = 95, exRes = "full", exBusy = false, editTimer = null;
+let _worker = null, _jobs = {}, _jobId = 0;
+
+function editOpts() {
+  return { denoise: denAmt, chroma: cdnAmt, sharpen: shpAmt, clarity: claAmt };
+}
+function getPrepped() {
+  if (denAmt <= 0 && cdnAmt <= 0 && shpAmt <= 0 && claAmt <= 0) {
+    prepped = src;
+    return src;
+  }
+  if (prepped && prepped !== src && prepped.width === src.width) return prepped;
+  prepped = E.prep(src, editOpts());
+  return prepped;
+}
+function slugName(s) {
+  return (s || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Za-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "");
+}
+function fileBase() {
+  const base = (fname || "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/[/\\?%*:|"<>]/g, "")
+    .trim() || "foto";
+  return base + "_" + (slugName(cur) || "filter");
+}
+function exportSize(mode) {
+  const w = fullSrc ? fullSrc.width : src ? src.width : 0;
+  const h = fullSrc ? fullSrc.height : src ? src.height : 0;
+  if (!w) return [0, 0];
+  return E.targetSize(w, h, mode || exRes);
+}
+function updateExportSizes() {
+  if (!$("rsfull") || !src) return;
+  const lab = (m) => {
+    const s = exportSize(m);
+    return s[0] ? s[0] + " × " + s[1] : "—";
+  };
+  $("rsfull").textContent = lab("full");
+  $("rs4k").textContent = lab("4k");
+  $("rs2k").textContent = lab("2k");
+}
+function bindSlider(id, vid, assign) {
+  const el = $(id);
+  const set = () => {
+    el.style.setProperty("--p", el.value + "%");
+    $(vid).textContent = el.value + " %";
+    assign(+el.value);
+  };
+  el.oninput = () => {
+    set();
+    prepped = null;
+    clearTimeout(editTimer);
+    editTimer = setTimeout(() => renderMain(true), 140);
+  };
+  set();
+  return el;
+}
+function resetEdits() {
+  ["den", "cdn", "shp", "cla"].forEach((id) => {
+    $(id).value = 0;
+    $(id).dispatchEvent(new Event("input"));
+  });
+  clearTimeout(editTimer);
+  prepped = null;
+  renderMain(true);
+}
+function setOpen(on) {
+  $("edpanel").classList.toggle("on", on);
+  $("edbtn").classList.toggle("on", on);
+  $("edbtn").setAttribute("aria-expanded", on ? "true" : "false");
+}
+function modalOpen(on) {
+  $("exmodal").hidden = !on;
+  if (on) {
+    updateExportSizes();
+    setFmt(exFmt);
+    setRes(exRes);
+  }
+}
+function setFmt(fmt) {
+  exFmt = fmt;
+  $("exfmts").querySelectorAll(".pill").forEach((b) => b.classList.toggle("on", b.dataset.fmt === fmt));
+  const q = fmt === "jpeg" || fmt === "webp";
+  $("qrow").style.display = q ? "flex" : "none";
+  $("qlab").textContent = fmt === "webp" ? "Kvalita WebP" : "Kvalita JPEG";
+}
+function setRes(res) {
+  exRes = res;
+  $("exres").querySelectorAll(".pill").forEach((b) => b.classList.toggle("on", b.dataset.res === res));
+}
+function getExportSource(mode) {
+  const canvas = fullSrc || (src ? toCanvas(src) : null);
+  if (!canvas) return null;
+  const [tw, th] = E.targetSize(canvas.width, canvas.height, mode);
+  if (canvas.width === tw && canvas.height === th) {
+    return canvas.getContext("2d").getImageData(0, 0, tw, th);
+  }
+  return stepDown(canvas, 0, 0, canvas.width, canvas.height, tw, th)
+    .getContext("2d")
+    .getImageData(0, 0, tw, th);
+}
+function encodeImage(img, fmt, quality) {
+  if (fmt === "tiff") return Promise.resolve(E.encodeTiff(img));
+  const c = toCanvas(img);
+  const mime = fmt === "png" ? "image/png" : fmt === "webp" ? "image/webp" : "image/jpeg";
+  const q = fmt === "png" ? undefined : quality / 100;
+  return new Promise((res, rej) => {
+    c.toBlob((b) => {
+      if (!b) rej(new Error("encode " + fmt));
+      else res(b);
+    }, mime, q);
+  });
+}
+function saveBlob(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 8000);
+}
+function workerBootstrap() {
+  const Eng = createEngine();
+  self.onmessage = function (ev) {
+    const d = ev.data;
+    try {
+      const img = new ImageData(new Uint8ClampedArray(d.buffer), d.w, d.h);
+      const out = Eng.process(img, d.opts, function (p, stage) {
+        self.postMessage({ id: d.id, type: "progress", p: p, stage: stage });
+      });
+      self.postMessage({ id: d.id, type: "done", buffer: out.data.buffer, w: out.width, h: out.height }, [
+        out.data.buffer,
+      ]);
+    } catch (err) {
+      self.postMessage({ id: d.id, type: "error", error: String((err && err.message) || err) });
+    }
+  };
+}
+function getWorker() {
+  if (_worker) return _worker;
+  const src = createEngine.toString() + ";\n(" + workerBootstrap.toString() + ")();";
+  const url = URL.createObjectURL(new Blob([src], { type: "text/javascript" }));
+  _worker = new Worker(url);
+  _worker.onmessage = function (ev) {
+    const d = ev.data,
+      job = _jobs[d.id];
+    if (!job) return;
+    if (d.type === "progress") job.onProg && job.onProg(d.p, d.stage);
+    else if (d.type === "done") {
+      delete _jobs[d.id];
+      job.resolve(new ImageData(new Uint8ClampedArray(d.buffer), d.w, d.h));
+    } else {
+      delete _jobs[d.id];
+      job.reject(new Error(d.error || "worker"));
+    }
+  };
+  _worker.onerror = function (e) {
+    const err = new Error((e && e.message) || "worker");
+    Object.keys(_jobs).forEach((k) => {
+      _jobs[k].reject(err);
+      delete _jobs[k];
+    });
+    try { _worker.terminate(); } catch (x) {}
+    _worker = null;
+  };
+  return _worker;
+}
+function processInWorker(img, opts, onProg) {
+  return new Promise((resolve, reject) => {
+    try {
+      const w = getWorker();
+      const id = ++_jobId;
+      _jobs[id] = { resolve, reject, onProg };
+      const buf = img.data.buffer.slice(0);
+      w.postMessage({ id, buffer: buf, w: img.width, h: img.height, opts }, [buf]);
+    } catch (e) {
+      try {
+        resolve(E.process(img, opts, onProg));
+      } catch (err) {
+        reject(err);
+      }
+    }
+  });
+}
+function setProgress(on, text) {
+  const p = $("exprog");
+  if (!p) return;
+  p.hidden = !on;
+  if (text) $("exprogt").textContent = text;
+  $("exgo").disabled = on;
+  $("excancel").disabled = on;
+}
+async function doExport() {
+  if (!src || exBusy) return;
+  exBusy = true;
+  setProgress(true, "Spracúvam…");
+  $("msg").textContent = "";
+  try {
+    const img = getExportSource(exRes);
+    if (!img) throw new Error("no image");
+    const opts = Object.assign(editOpts(), { filter: P[cur], amt: amt });
+    const out = await processInWorker(img, opts, (p, stage) => {
+      setProgress(true, (stage || "Spracúvam…") + " " + Math.round(p * 100) + " %");
+    });
+    setProgress(true, "Ukladám…");
+    const fmt = exFmt;
+    const ext = fmt === "jpeg" ? ".jpg" : fmt === "png" ? ".png" : fmt === "webp" ? ".webp" : ".tiff";
+    const blob = await encodeImage(out, fmt, exQual);
+    saveBlob(blob, fileBase() + ext);
+    modalOpen(false);
+  } catch (e) {
+    $("msg").textContent =
+      "Uloženie sa nepodarilo. Skús menšie rozlíšenie, iný formát, alebo počkaj a skús znova.";
+  } finally {
+    exBusy = false;
+    setProgress(false);
+  }
+}
+
+bindSlider("den", "denv", (v) => (denAmt = v));
+bindSlider("cdn", "cdnv", (v) => (cdnAmt = v));
+bindSlider("shp", "shpv", (v) => (shpAmt = v));
+bindSlider("cla", "clav", (v) => (claAmt = v));
+$("edbtn").onclick = () => setOpen(!$("edpanel").classList.contains("on"));
+$("edreset").onclick = resetEdits;
+$("dl").onclick = () => {
+  if (!src) return;
+  modalOpen(true);
+};
+$("excancel").onclick = () => {
+  if (!exBusy) modalOpen(false);
+};
+$("exmodal").addEventListener("click", (e) => {
+  if (e.target === $("exmodal") && !exBusy) modalOpen(false);
+});
+$("exgo").onclick = doExport;
+$("exfmts").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-fmt]");
+  if (b) setFmt(b.dataset.fmt);
+});
+$("exres").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-res]");
+  if (b) setRes(b.dataset.res);
+});
+$("jq").oninput = () => {
+  exQual = +$("jq").value;
+  $("jq").style.setProperty("--p", exQual + "%");
+  $("jqv").textContent = String(exQual);
+};
+$("jq").style.setProperty("--p", "95%");
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$("exmodal").hidden && !exBusy) modalOpen(false);
+});
+
+window.__edit = {
+  engine: E,
+  getPrepped,
+  editOpts,
+  processInWorker,
+  encodeImage,
+  encodeTiff: E.encodeTiff,
+  denoiseImage: E.denoiseImage,
+  sharpenImage: E.sharpenImage,
+  prep: E.prep,
+  process: E.process,
+  targetSize: E.targetSize,
+  getExportSource,
+  fileBase,
+  get src() { return src; },
+  get fullSrc() { return fullSrc; },
+  get filtered() { return filtered; },
+  setEdits(o) {
+    if (o.denoise != null) { $("den").value = o.denoise; $("den").dispatchEvent(new Event("input")); }
+    if (o.chroma != null) { $("cdn").value = o.chroma; $("cdn").dispatchEvent(new Event("input")); }
+    if (o.sharpen != null) { $("shp").value = o.sharpen; $("shp").dispatchEvent(new Event("input")); }
+    if (o.clarity != null) { $("cla").value = o.clarity; $("cla").dispatchEvent(new Event("input")); }
+  },
+  waitPreview() {
+    return new Promise((r) => setTimeout(r, 220));
+  },
+};
+
 (function(){const h=decodeURIComponent((location.hash||"").replace(/^#/,"")).toLowerCase().trim();if(!h)return;const n=s=>(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");const fi=Object.keys(P).find(k=>n(k)===h);const ci=CATS.findIndex(c=>n(c[0])===h||n(c[0]).includes(h));if(ci>=0)cat=ci;if(fi){cur=fi;if(ci<0){const j=CATS.findIndex((c,i)=>i>0&&Array.isArray(c[1])&&c[1].includes(fi));if(j>=0)cat=j}}else if(ci>=0){const names=CATS[ci][1];if(Array.isArray(names)&&names.length)cur=names[0]}})();
 renderTabs();demo();
 </script>
+
 </body>
 </html>
